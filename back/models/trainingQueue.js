@@ -2,8 +2,10 @@
 import mongoose from "mongoose";
 
 const trainingQueue = new mongoose.Schema({
-	id: { type: mongoose.Types.ObjectId, ref: "Town" },
-	trainingTime: Date,
+	townId: { type: mongoose.Types.ObjectId, ref: "Town" },
+	trainingKnightTime: [ {type: Number}],
+	trainingArcherTime: [{type:Number}],
+	trainingHorsemanTime: [{type:Number}],
 	training: String,
 	trainingUnitId: mongoose.Types.ObjectId,
 });
