@@ -48,3 +48,15 @@ export const createAccount = (credentials) => {
 		data: credentials,
 	});
 };
+
+
+export const trainUnits = (qty) => {
+	return axios({
+		method:"post",
+		headers: {
+			Authorization: `Bearer ${qty.token}`
+		},
+		url:`${url}/kingdoms/recruit`,
+		data: qty
+	})
+}

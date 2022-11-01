@@ -5,3 +5,4 @@ export const ERROR_LOGIN_TO_ACCOUNT = "ERROR_LOGIN_TO_ACCOUNT";
 export const LOGOUT = "LOGOUT";
 export const GET_TOWN = "GET_TOWN";
 export const UPGRADE_BUILDING = "UPGRADE_BUILDING";
+export const CREATE_UNITS = "CREATE_UNITS"

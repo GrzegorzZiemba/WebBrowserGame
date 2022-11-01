@@ -21,6 +21,7 @@ const auth = async (req, res, next) => {
 		if (!user) {
 			throw new Error();
 		}
+		console.log("ZALOGOWANY")
 		req.token = token;
 		req.user = user;
 		next();

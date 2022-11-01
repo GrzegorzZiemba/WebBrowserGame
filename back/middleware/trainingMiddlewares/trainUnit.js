@@ -4,7 +4,7 @@ import { horseRider, archer, knight } from "../armyStats.js";
 import BuildingQueue from "../../models/buildingModel.js";
 import Town from "../../models/townModel.js";
 import mongoose from "mongoose";
-export async function trainUnit(town, army, unit, qty){
+export async function trainUnit(trainingTown, army, unit, qty){
     var costIron;
     var costWood;
     var costStone;
@@ -36,8 +36,8 @@ export async function trainUnit(town, army, unit, qty){
      
     }
 	
-	const id = mongoose.Types.ObjectId(town);
-	const trainingTown = await Town.find({id: id})
+	// const id = mongoose.Types.ObjectId(town);
+	// const trainingTown = await Town.find({id: id})
 	if (
         trainingTown[0].stone > costStone &&
         trainingTown[0].wood > costWood &&

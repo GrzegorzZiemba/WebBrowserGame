@@ -4,6 +4,7 @@ import { upagradeTown } from "../store/actions/townActions";
 import { getTown } from "../store/actions/townActions";
 import Login from "../Forms/Login";
 import Building from "./Building";
+import Army from "./Army";
 function addSeconds(numOfSeconds, date) {
 	date.setSeconds(date.getSeconds() + numOfSeconds);
 
@@ -13,17 +14,14 @@ const Kingdom = () => {
 	let now = new Date();
 	const town = useSelector((state) => state.town.town);
 	const buildDate = new Date(town.sawmillFinishTime);
-	console.log("Ja sie robie ?");
 	const dispatch = useDispatch();
 	const userId = localStorage.getItem("userId");
 
 	const userToken = localStorage.getItem("userInfo");
 
-	console.log(town);
 
 	useEffect(() => {
 		dispatch(getTown(localStorage.getItem("userInfo")));
-		console.log("to");
 		const interval = setInterval(
 			() => {
 				now = new Date();
@@ -36,7 +34,6 @@ const Kingdom = () => {
 		return () => clearInterval(interval);
 	}, []);
 
-	console.log(town);
 	return (
 		<>
 			{userId ? (
@@ -90,6 +87,11 @@ const Kingdom = () => {
 						now={new Date()}
 						buildingName="ironOreMine"
 					/>
+
+					<div>
+						<Army />
+					
+					</div>
 				</>
 			) : (
 				<Login />

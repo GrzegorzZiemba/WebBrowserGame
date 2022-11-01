@@ -31,7 +31,7 @@ const Building = ({
 				margin: "10px",
 			}}
 		>
-			Sawmill LEVEL:{buildingLevel} / PRODUCTION:
+			{buildingName} LEVEL:{buildingLevel} / PRODUCTION:
 			{buildingProduction}{" "}
 			{buildingIsBuild ? (
 				<>
