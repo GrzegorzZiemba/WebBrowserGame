@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import Login from "../Forms/Login";
-import * as Yup from "yup";
+import React from "react";
+import { useDispatch } from "react-redux";
+
 import {
-	loginAccount,
 	logoutAccount,
-	createAccount,
+	
 } from "../store/actions/userActions";
 import {
-	BrowserRouter as Router,
-	Switch,
-	Redirect,
-	Route,
-	Link,
-	useNavigate,
+
+	useNavigate
 } from "react-router-dom";
-import Signup from "../Forms/Signup";
+import { Button,  Container } from "react-bootstrap";
+import "../App.css"
+import Logins from "./Logins";
 
 const LoginComponent = () => {
 	const dispatch = useDispatch();
@@ -24,135 +19,24 @@ const LoginComponent = () => {
 	let navigate = useNavigate();
 
 	return (
-		<div>
+		<Container className="viewport-height d-flex align-items-center justify-content-center">
+		{/* >#BCAA99 / #8E5572</Button> */}
+   
+   
 			{tokenInfo ? (
-				<button
+				<Button className='main-button'
 					onClick={() => {
 						dispatch(logoutAccount());
+						navigate('/')
 					}}
 				>
 					Logout
-				</button>
+				</Button>
 			) : (
-				<div style={{ display: "flex" }}>
-					<div>
-						<Login />
-						{/* <Formik
-							initialValues={{ email: "", password: "" }}
-							validationSchema={Yup.object({
-								email: Yup.string(),
-								password: Yup.string(),
-							})}
-							onSubmit={(values, { setSubmitting }) => {
-								setTimeout(() => {
-									setSubmitting(false);
-
-									dispatch(
-										loginAccount({
-											email: values.email,
-											password: values.password,
-										})
-									);
-								}, 400);
-								setTimeout(() => {
-									console.log(localStorage.getItem("userInfo"));
-									if (localStorage.getItem("userInfo")) {
-										handleClick();
-									}
-								}, 500);
-							}}
-						>
-							<Form>
-								<label htmlFor="email">E-mail</label>
-								<Field
-									style={{ size: "200px", width: "100%" }}
-									name="email"
-									type="text"
-								/>
-								<ErrorMessage
-									name="email"
-									component="div"
-									style={{ color: "red" }}
-								/>
-
-								<label htmlFor="password">Password</label>
-								<Field
-									style={{ size: "200px", width: "100%" }}
-									name="password"
-									type="password"
-								/>
-								<ErrorMessage
-									name="password"
-									component="div"
-									style={{ color: "red" }}
-								/>
-
-								<button type="submit">Submit</button>
-							</Form>
-						</Formik> */}
-					</div>
-					<div>
-						<Signup />{" "}
-						{/* <Formik
-							initialValues={{ email: "", password: "" }}
-							validationSchema={Yup.object({
-								email: Yup.string(),
-								password: Yup.string(),
-							})}
-							onSubmit={(values, { setSubmitting }) => {
-								setSubmitting(false);
-
-								dispatch(
-									createAccount({
-										username: values.username,
-										email: values.email,
-										password: values.password,
-									})
-								);
-							}}
-						>
-							<Form>
-								{" "}
-								<label htmlFor="username">Username</label>
-								<Field
-									style={{ size: "200px", width: "100%" }}
-									name="username"
-									type="text"
-								/>
-								<ErrorMessage
-									name="email"
-									component="div"
-									style={{ color: "red" }}
-								/>
-								<label htmlFor="email">E-mail</label>
-								<Field
-									style={{ size: "200px", width: "100%" }}
-									name="email"
-									type="text"
-								/>
-								<ErrorMessage
-									name="email"
-									component="div"
-									style={{ color: "red" }}
-								/>
-								<label htmlFor="password">Password</label>
-								<Field
-									style={{ size: "200px", width: "100%" }}
-									name="password"
-									type="password"
-								/>
-								<ErrorMessage
-									name="password"
-									component="div"
-									style={{ color: "red" }}
-								/>
-								<button type="submit">Submit</button>
-							</Form>
-						</Formik> */}
-					</div>
-				</div>
+				<Logins />
 			)}
-		</div>
+		
+		</Container>
 	);
 };
 

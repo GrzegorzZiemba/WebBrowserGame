@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { upagradeTown } from "../store/actions/townActions";
 import { getTown } from "../store/actions/townActions";
-import Login from "../Forms/Login";
-import Building from "./Building";
-import Army from "./Army";
-function addSeconds(numOfSeconds, date) {
-	date.setSeconds(date.getSeconds() + numOfSeconds);
+import Building from "../components/Building";
+import Army from "../components/Army";
+import Logins from "../components/Logins";
+import KingdomNavbar from "../components/KingdomNavbar";
+import {  Container } from "react-bootstrap";
 
-	return date;
-}
 const Kingdom = () => {
-	let now = new Date();
 	const town = useSelector((state) => state.town.town);
-	const buildDate = new Date(town.sawmillFinishTime);
 	const dispatch = useDispatch();
 	const userId = localStorage.getItem("userId");
 
-	const userToken = localStorage.getItem("userInfo");
 
 
 	useEffect(() => {
 		dispatch(getTown(localStorage.getItem("userInfo")));
 		const interval = setInterval(
 			() => {
-				now = new Date();
 				dispatch(getTown(localStorage.getItem("userInfo")));
 			},
 
@@ -32,19 +25,15 @@ const Kingdom = () => {
 		);
 
 		return () => clearInterval(interval);
-	}, []);
+	});
 
 	return (
 		<>
 			{userId ? (
 				<>
-					{" "}
-					<div>
-						{" "}
-						<h2>Wood: {town.wood} </h2>
-						<h2>Stone: {town.stone}</h2>
-						<h2>IronOre: {town.ironOre}</h2>
-					</div>
+				<KingdomNavbar/>
+				<Container>
+		
 					<Building
 						wood={town.wood}
 						stone={town.stone}
@@ -87,14 +76,14 @@ const Kingdom = () => {
 						now={new Date()}
 						buildingName="ironOreMine"
 					/>
-
-					<div>
+					<br/>					<h1>Build an army</h1>
 						<Army />
 					
-					</div>
+					
+				</Container>
 				</>
 			) : (
-				<Login />
+				<Logins />
 			)}
 		</>
 	);

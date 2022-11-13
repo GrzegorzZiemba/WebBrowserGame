@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
-	loginAccount,
-	logoutAccount,
-	createAccount,
+	loginAccount
+	
 } from "../store/actions/userActions";
+import { Button } from "react-bootstrap";
+import "../App.css"
+import { useNavigate } from "react-router";
 
 const Login = () => {
 	const dispatch = useDispatch();
+	let navigate = useNavigate();
+
 	console.log("LOGIN FORM");
 	return (
 		<Formik
@@ -21,16 +25,17 @@ const Login = () => {
 			onSubmit={(values, { setSubmitting }) => {
 				setTimeout(() => {
 					setSubmitting(false);
-
 					dispatch(
 						loginAccount({
 							email: values.email,
 							password: values.password,
 						})
-					);
+						);
 				}, 400);
 				setTimeout(() => {
 					console.log(localStorage.getItem("userInfo"));
+					navigate('/kingdom')
+
 				}, 500);
 			}}
 		>
@@ -55,7 +60,7 @@ const Login = () => {
 					style={{ color: "red" }}
 				/>
 
-				<button type="submit">Submit</button>
+				<Button className='button-main' type="submit">Submit</Button>
 			</Form>
 		</Formik>
 	);

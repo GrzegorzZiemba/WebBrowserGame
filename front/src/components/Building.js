@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { upagradeTown } from "../store/actions/townActions";
 
@@ -24,29 +25,29 @@ const Building = ({
 			: false;
 	const userToken = localStorage.getItem("userInfo");
 	return (
-		<div
-			style={{
-				border: "1px solid black",
-				padding: "20px",
-				margin: "10px",
-			}}
-		>
-			{buildingName} LEVEL:{buildingLevel} / PRODUCTION:
-			{buildingProduction}{" "}
-			{buildingIsBuild ? (
+		<>
+		<Row xs={1} md={2} lg={1} className="g-4 mt-1 justify-content-center">
+		
+		  <Col>
+			<Card>
+			  <Card.Img variant="top" src="https://img.favpng.com/23/11/25/scribblenauts-sawmill-factory-clip-art-png-favpng-r9tVLHhr621fm138S5RPyxuMR.jpg" />
+			  <Card.Body>
+				<Card.Title>{buildingName}  <br />LEVEL:{buildingLevel} <br /> PRODUCTION: {buildingProduction}{" "}</Card.Title>
+				<Card.Text>
+				{buildingIsBuild ? (
 				<>
 					<h1>Buduje sie</h1>
 					<h2>{parseInt((buildDate - now) / 1000, 10)}</h2>
 				</>
 			) : // TimeChecker(town.sawmillBuildingTime)
 			isAvailable ? (
-				<button
+				<Button
 					onClick={() => {
 						dispatch(upagradeTown(userId, userToken, buildingName));
 					}}
 				>
 					Build
-				</button>
+				</Button>
 			) : (
 				<>
 					<h2>
@@ -60,7 +61,14 @@ const Building = ({
 					</h2>
 				</>
 			)}
-		</div>
+				</Card.Text>
+			  </Card.Body>
+			</Card>
+		  </Col>
+				
+	  </Row>
+		
+		</>
 	);
 };
 

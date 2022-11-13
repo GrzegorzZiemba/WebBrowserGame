@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import Login from "../Forms/Login";
+
 import * as Yup from "yup";
 import {
-	loginAccount,
-	logoutAccount,
+	
 	createAccount,
 } from "../store/actions/userActions";
+import "../App.css"
+import { Button } from "react-bootstrap";
+import { Navigate } from "react-router";
+
 const Signup = () => {
 	const dispatch = useDispatch();
 
@@ -20,7 +23,7 @@ const Signup = () => {
 			})}
 			onSubmit={(values, { setSubmitting }) => {
 				setSubmitting(false);
-
+				Navigate('/login')
 				dispatch(
 					createAccount({
 						username: values.username,
@@ -30,7 +33,7 @@ const Signup = () => {
 				);
 			}}
 		>
-			<Form>
+			<Form as='form'>
 				{" "}
 				<label htmlFor="username">Username</label>
 				<Field
@@ -57,7 +60,7 @@ const Signup = () => {
 					component="div"
 					style={{ color: "red" }}
 				/>
-				<button type="submit">Submit</button>
+				<Button className='button-main' type="submit">Submit</Button>
 			</Form>
 		</Formik>
 	);
