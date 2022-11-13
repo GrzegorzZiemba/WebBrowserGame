@@ -1,4 +1,3 @@
-// Create here building queue
 import mongoose from "mongoose";
 
 const trainingQueue = new mongoose.Schema({

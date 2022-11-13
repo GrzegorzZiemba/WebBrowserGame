@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col,  Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { upagradeTown } from "../store/actions/townActions";
 
@@ -39,7 +39,7 @@ const Building = ({
 					<h1>Buduje sie</h1>
 					<h2>{parseInt((buildDate - now) / 1000, 10)}</h2>
 				</>
-			) : // TimeChecker(town.sawmillBuildingTime)
+			) :
 			isAvailable ? (
 				<Button
 					onClick={() => {

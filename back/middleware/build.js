@@ -16,7 +16,7 @@ export default async function (town, buildingType, buildingName) {
 		const now = new Date();
 
 		const finishedDate = addSeconds(buildingType.buildTime, now);
-		console.log(finishedDate);
+		
 		const queue = new BuildingQueue({
 			id: town._id,
 			buildingTime: finishedDate,
@@ -35,8 +35,8 @@ export default async function (town, buildingType, buildingName) {
 
 		return "Done";
 	} else {
-		console.log(town.stone);
-		console.log(buildingType.stone);
+		
+		
 		return "Not Done";
 	}
 }

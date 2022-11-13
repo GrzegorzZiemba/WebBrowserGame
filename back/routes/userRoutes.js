@@ -13,13 +13,13 @@ router.post("/createkingdom", async (req, res) => {
 	const user = req.body;
 
 	const val = await User.find({ email: user.email });
-	console.log(val.length);
+	
 	if (val.length == 0) {
 		const army = new ArmyModel();
 		await army.save();
-		console.log(user);
+		
 		const sawmill = new Sawmill();
-		console.log(sawmill);
+		
 		await sawmill.save();
 		const stoneMine = new StoneMine();
 		await stoneMine.save();
@@ -27,7 +27,7 @@ router.post("/createkingdom", async (req, res) => {
 		await ironOreMine.save();
 		const barrack = new BarrackModel();
 		await barrack.save();
-		console.log();
+		
 		const town = new Town({
 			ironOreMine: ironOreMine._id,
 			sawmill: sawmill._id,
@@ -35,7 +35,7 @@ router.post("/createkingdom", async (req, res) => {
 			barrack: barrack._id,
 			army: army._id,
 		});
-		console.log(town);
+		
 		await town.save();
 		const userThat = new User({
 			...user,
@@ -43,7 +43,7 @@ router.post("/createkingdom", async (req, res) => {
 		});
 		await userThat.save();
 		const token = await userThat.generateAuthToken();
-		console.log("Przed Send");
+		
 		res.status(201).send({ user, token });
 	} else {
 		res.status(400).send({ error: "You did something Wrung" });
@@ -52,15 +52,15 @@ router.post("/createkingdom", async (req, res) => {
 
 router.post("/user/login", async (req, res) => {
 	try {
-		console.log("testing");
-		console.log(req.body);
+		
+		
 		const user = await User.loginUser(req.body.email, req.body.password);
-		console.log(user);
+		
 		const token = await user.generateAuthToken();
 		const mail = user.email;
 		const id = user._id.toString();
-		console.log("=============");
-		console.log(id);
+		
+		
 
 		res.send({ mail, token, id });
 	} catch (e) {

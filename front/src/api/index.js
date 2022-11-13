@@ -19,7 +19,7 @@ export const logoutAccount = (id) => {
 };
 
 export const getTown = (token) => {
-	console.log(token);
+	
 	return axios({
 		method: "post",
 		headers: {
@@ -30,7 +30,7 @@ export const getTown = (token) => {
 };
 
 export const upagradeBuilding = (id, token, building) => {
-	console.log("upgrading..");
+	
 	return axios({
 		method: "post",
 		headers: {

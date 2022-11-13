@@ -43,7 +43,7 @@ export default setInterval(async function () {
 
 			controlNumber = 0;
 		}
-		console.log("====");
+		
 	});
 	controlNumber += 1;
 }, 12000);

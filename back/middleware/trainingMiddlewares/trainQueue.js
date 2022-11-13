@@ -6,7 +6,7 @@ import TrainingQueue from "../../models/trainingQueue.js"
 
 export default setInterval(async function() {
     const checkQueueLength = await TrainingQueue.countDocuments({});
-    console.log("To Train "  + checkQueueLength)
+    
     if(checkQueueLength > 0){
         const queue = await TrainingQueue.find({});
 
@@ -14,14 +14,14 @@ export default setInterval(async function() {
             if(el.trainingArcherTime.length > 0){
                 const archerArray = [...el.trainingArcherTime ];
                 archerArray[0] = archerArray[0] - 1
-                // console.log(archerArray)
+                 
                 if(archerArray[0] <= 0){
                     const town  = await Town.findById(el.townId)
                     const army = await ArmyModel.findById(town.army)
                     let archerQty = army.archer + 1 
                     await army.update({archer: archerQty})
                     archerArray.shift()
-                    // console.log(archerArray)
+                     
                     await el.update({
                         trainingArcherTime: archerArray
                     })
@@ -35,14 +35,14 @@ export default setInterval(async function() {
             if(el.trainingKnightTime.length > 0){
                 const knightArray = [...el.trainingKnightTime ];
                 knightArray[0] = knightArray[0] - 1
-                // console.log(knightArray)
+                 
                 if(knightArray[0] <= 0){
                     const town  = await Town.findById(el.townId)
                     const army = await ArmyModel.findById(town.army)
                     let knightQty = army.knigth + 1 
                     await army.update({knigth: knightQty})
                     knightArray.shift()
-                    // console.log(knightArray)
+                     
                     await el.update({
                         trainingKnightTime: knightArray
                     })
@@ -56,14 +56,14 @@ export default setInterval(async function() {
             if(el.trainingHorsemanTime.length > 0){
                 const horseManArray = [...el.trainingHorsemanTime ];
                 horseManArray[0] = horseManArray[0] - 1
-                // console.log(horseManArray)
+                 
                 if(horseManArray[0] <= 0){
                     const town  = await Town.findById(el.townId)
                     const army = await ArmyModel.findById(town.army)
                     let horseManQty = army.horseRider + 1 
                     await army.update({horseRider: horseManQty})
                     horseManArray.shift()
-                    // console.log(horseManArray)
+                     
                     await el.update({
                         trainingHorsemanTime: horseManArray
                     })

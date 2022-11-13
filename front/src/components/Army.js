@@ -35,7 +35,7 @@ const Army = () => {
             dispatch(createUnits({archer:Math.floor(values.archerQty), knight: Math.floor(values.knightQty), horseRiders: Math.floor(values.horseRidersQty), token: userToken}))
         }, 400);
         setTimeout(() => {
-            console.log(localStorage.getItem("userInfo"));
+            
         }, 500);
     }}
 >

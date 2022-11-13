@@ -8,7 +8,7 @@ function addSeconds(numOfSeconds, date) {
 const now = new Date();
 
 const TimeChecker = ({ time }) => {
-	console.log(time);
+	
 	const finishedDate = addSeconds(time, now);
 
 	const [sec, setSec] = useState(finishedDate);
@@ -16,7 +16,7 @@ const TimeChecker = ({ time }) => {
 	useEffect(() => {
 		const buildingInterval = setInterval(() => {
 			setSec(sec - 1);
-			console.log(sec);
+			
 		}, 1000);
 		return () => clearInterval(buildingInterval);
 	});

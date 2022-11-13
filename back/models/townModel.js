@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const townSchema = new mongoose.Schema({
-	// userId: { type: mongoose.Types.ObjectId, ref: "User" },
 	experience: { type: Number, default: 1 },
 	ironOre: { type: Number, default: 10 },
 	ironOreMine: { type: mongoose.Types.ObjectId, ref: "IronOreMine" },

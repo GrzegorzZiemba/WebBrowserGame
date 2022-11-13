@@ -14,7 +14,7 @@ const Login = () => {
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
 
-	console.log("LOGIN FORM");
+	
 	return (
 		<Formik
 			initialValues={{ email: "", password: "" }}
@@ -33,7 +33,7 @@ const Login = () => {
 						);
 				}, 400);
 				setTimeout(() => {
-					console.log(localStorage.getItem("userInfo"));
+					
 					navigate('/kingdom')
 
 				}, 500);

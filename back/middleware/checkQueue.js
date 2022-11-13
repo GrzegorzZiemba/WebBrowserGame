@@ -7,7 +7,7 @@ import upgrade from "./upgrade.js";
 
 export default setInterval(async function () {
 	const checkQueueLength = await BuildingQueue.countDocuments({});
-	console.log(checkQueueLength);
+	
 
 	if (checkQueueLength > 0) {
 		const thatTime = new Date();

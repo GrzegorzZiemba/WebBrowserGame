@@ -5,7 +5,7 @@ export default async function (town, buildingType) {
 	const wood = Math.floor(buildingType.wood * 1.5);
 	const ironOre = Math.floor((buildingType.ironOre + 1) * 1.2);
 	const buildTime = Math.floor(buildingType.buildTime * 1.2);
-	console.log(buildingType);
+	
 	await buildingType.update({
 		level: level,
 		production: production,

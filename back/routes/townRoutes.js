@@ -9,7 +9,7 @@ import build from "../middleware/build.js";
 const router = express.Router();
 
 router.post("/town", auth, async (req, res) => {
-	console.log("Town");
+	
 	if (auth) {
 		try {
 			const town = await Town.findById({ _id: req.user.town });
@@ -50,22 +50,22 @@ router.post("/town", auth, async (req, res) => {
 			res.status(400).send(e);
 		}
 	} else {
-		console.log("please authenticate");
+		
 	}
 });
 
 router.post("/town/upgrade/:id", auth, async (req, res) => {
 	const now = new Date();
 
-	console.log("Building");
+	
 	if (auth) {
 		const id = req.user._id;
 		const buildingName = req.body.building;
-		console.log(req.body);
+		
 		const loggedUser = await User.findById({ _id: id });
-		console.log(loggedUser);
+		
 		const findTown = await Town.findById({ _id: loggedUser.town });
-		console.log(findTown);
+		
 		if (req.body.building === "sawmill") {
 			const sawmill = await Sawmill.findById({ _id: findTown.sawmill });
 			build(findTown, sawmill, buildingName);
@@ -93,14 +93,14 @@ router.post("/town/upgrade/:id", auth, async (req, res) => {
 });
 
 router.get("/kingdoms/:id", async (req, res) => {
-	console.log(req.body);
-	console.log(req.param);
-	console.log(req.params.id);
+	
+	
+	
 	const towns = await Town.find().limit(2).skip(parseInt(req.params.id));
 	const townsIds = towns.map((id) => [
 		{ wood: id.wood, stone: id.stone, ironOre: id.ironOre, id: id._id },
 	]);
-	console.log(towns);
+	
 	res.send(townsIds);
 });
 

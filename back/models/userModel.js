@@ -43,8 +43,8 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function (next) {
 	const user = this;
-	console.log(user);
-	console.log("Pre  " + user.password);
+	
+	
 	if (user.isModified("password")) {
 		user.password = await bcrypt.hash(user.password, 8);
 	}
@@ -53,7 +53,7 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.generateAuthToken = async function () {
 	const user = this;
-	console.log("Generate ", this);
+	
 	const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_JWT);
 
 	user.tokens = user.tokens.concat({ token });
@@ -64,16 +64,16 @@ userSchema.methods.generateAuthToken = async function () {
 
 userSchema.statics.loginUser = async (email, password) => {
 	const user = await User.findOne({ email });
-	console.log(user);
+	
 	if (!user) {
 		throw new Error("Cannot login");
 	}
 
 	const checkPass = await bcrypt.compare(password, user.password);
-	console.log(checkPass);
+	
 	if (!checkPass) {
-		console.log(password);
-		console.log(user.password);
+		
+		
 		throw new Error("Cannot login");
 	}
 

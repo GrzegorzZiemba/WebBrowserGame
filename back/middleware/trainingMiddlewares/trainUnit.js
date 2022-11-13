@@ -36,8 +36,7 @@ export async function trainUnit(trainingTown, army, unit, qty){
      
     }
 	
-	// const id = mongoose.Types.ObjectId(town);
-	// const trainingTown = await Town.find({id: id})
+
 	if (
         trainingTown[0].stone > costStone &&
         trainingTown[0].wood > costWood &&
@@ -45,7 +44,7 @@ export async function trainUnit(trainingTown, army, unit, qty){
 	) {
      
 		
-        console.log(`======================================== ${trainingTown} ===========================`)
+        
         if(trainingTown[0]._id){
             const nowBuilding = await TrainingQueue.find({
                 townId: trainingTown[0]._id
@@ -54,18 +53,18 @@ export async function trainUnit(trainingTown, army, unit, qty){
                 const newTownStoneAccountancy = trainingTown[0].stone - costStone;
                 const newTownWoodAccountancy = trainingTown[0].wood - costWood;
                 const newTownironOreAccountancy = trainingTown[0].ironOre - costIron;
-                console.log(trainingTown[0].stone)
-                console.log(newTownStoneAccountancy)
-                console.log(newTownWoodAccountancy)
+                
+                
+                
                 await trainingTown[0].update({
                     stone: newTownStoneAccountancy,
                     wood: newTownWoodAccountancy,
                     ironOre: newTownironOreAccountancy
                 })
 
-            // console.log(nowBuilding)
+       
             
-            console.log("Whatever=========''''''''''''//////////")
+            
         
             if(nowBuilding === null){
                 const trainingField = new TrainingQueue({townId:trainingTown[0]._id})
@@ -74,14 +73,14 @@ export async function trainUnit(trainingTown, army, unit, qty){
                 await trainingField.save()
             }
             else{
-                console.log(nowBuilding)
+                
                 for (var i = 0; i < qty; i++) nowBuilding[0][recruitmentType].push(timeToRecruit);
                     await nowBuilding[0].update({[recruitmentType]: nowBuilding[0][recruitmentType]})
                     
                 }
             }}
     else {
-        console.log("Not enough "  +  trainingTown[0].stone + " VS " + costStone)
+        
     }
 }   
         

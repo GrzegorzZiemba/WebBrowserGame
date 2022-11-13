@@ -1,4 +1,3 @@
-// Create here building queue
 import mongoose from "mongoose";
 
 const buildingQueue = new mongoose.Schema({
