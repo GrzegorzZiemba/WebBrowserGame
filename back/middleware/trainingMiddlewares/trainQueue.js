@@ -2,11 +2,8 @@ import ArmyModel from "../../models/armyModel.js";
 import Town from "../../models/townModel.js";
 import TrainingQueue from "../../models/trainingQueue.js"
 
-
-
 export default setInterval(async function() {
     const checkQueueLength = await TrainingQueue.countDocuments({});
-    
     if(checkQueueLength > 0){
         const queue = await TrainingQueue.find({});
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col,  Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { upagradeTown } from "../store/actions/townActions";
-
+import DrewnoImage from "../images/Drewno.png"
 const Building = ({
 	wood,
 	stone,
@@ -30,9 +30,9 @@ const Building = ({
 		
 		  <Col>
 			<Card>
-			  <Card.Img variant="top" src="https://img.favpng.com/23/11/25/scribblenauts-sawmill-factory-clip-art-png-favpng-r9tVLHhr621fm138S5RPyxuMR.jpg" />
+			  <Card.Img variant="top" src={DrewnoImage} style={{width:"200px"}}/>
 			  <Card.Body>
-				<Card.Title>{buildingName}  <br />LEVEL:{buildingLevel} <br /> PRODUCTION: {buildingProduction}{" "}</Card.Title>
+				<Card.Title>{buildingName}   <br />LEVEL:{buildingLevel} <br /> PRODUCTION: {buildingProduction}{" "}</Card.Title>
 				<Card.Text>
 				{buildingIsBuild ? (
 				<>

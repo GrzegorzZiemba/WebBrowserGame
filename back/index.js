@@ -7,7 +7,7 @@ import "./mongodb/mongodb.js";
 import userRoutes from "./routes/userRoutes.js";
 import townRoutes from "./routes/townRoutes.js";
 import recruitingRoutes from "./routes/recruitingRoutes.js";
-
+import production from "./middleware/production.js"
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());

@@ -7,12 +7,12 @@ import upgrade from "./upgrade.js";
 
 export default setInterval(async function () {
 	const checkQueueLength = await BuildingQueue.countDocuments({});
-	
 
 	if (checkQueueLength > 0) {
 		const thatTime = new Date();
 		const queue = await BuildingQueue.find({});
 		queue.forEach(async (el) => {
+		
 			if (thatTime > el.buildingTime) {
 				if (el.building == "sawmill") {
 					const sawmill = await Sawmill.findById({ _id: el.buildingId });
