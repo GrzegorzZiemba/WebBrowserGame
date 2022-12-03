@@ -12,6 +12,7 @@ const townSchema = new mongoose.Schema({
 	army: { type: mongoose.Types.ObjectId, ref: "ArmyModel" },
 	barrack: { type: mongoose.Types.ObjectId, ref: "BarrackModel" },
 	building: { type: Number, default: 0 },
+	position: {type: Number}
 });
 
 const Town = mongoose.model("Town", townSchema);

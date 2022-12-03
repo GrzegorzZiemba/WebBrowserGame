@@ -7,6 +7,7 @@ import StoneMine from "../models/buildingsModels/stoneMineModel.js";
 import IronOreMine from "../models/buildingsModels/ironOreMineModel.js";
 import checkQueue from "../middleware/checkQueue.js";
 import build from "../middleware/build.js";
+import PositionModel from "../models/positionModel.js";
 const router = express.Router();
 
 router.post("/town", auth, async (req, res) => {
@@ -17,6 +18,8 @@ router.post("/town", auth, async (req, res) => {
 			const sawmill = await Sawmill.findById({ _id: town.sawmill });
 			const stoneMine = await StoneMine.findById({ _id: town.stoneMine });
 			const ironOreMine = await IronOreMine.findById({ _id: town.ironOreMine });
+			const freePosition = await PositionModel.findById({_id: "638b882cc812fad2edcbc840"})
+			console.log(freePosition.position)
 			res.status(201).send({
 				exp: town.experience,
 				ironOre: town.ironOre,
@@ -46,6 +49,8 @@ router.post("/town", auth, async (req, res) => {
 				ironOreMineWood: ironOreMine.wood,
 				ironOreMineStone: ironOreMine.stone,
 				ironOreMineIronOre: ironOreMine.ironOre,
+				position: "EHE"
+				
 			});
 		} catch (e) {
 			res.status(400).send(e);
@@ -93,13 +98,14 @@ router.post("/town/upgrade/:id", auth, async (req, res) => {
 	}
 });
 
-router.get("/kingdoms/:id", async (req, res) => {
+router.post("/kingdoms/:id", async (req, res) => {
 	
 	
 	
-	const towns = await Town.find().limit(2).skip(parseInt(req.params.id));
+	const towns = await Town.find().limit(3).skip(3*parseInt(req.params.id));
+	console.log("Wywołanie listy królestw")
 	const townsIds = towns.map((id) => [
-		{ wood: id.wood, stone: id.stone, ironOre: id.ironOre, id: id._id },
+		{ wood: id.wood, stone: id.stone, ironOre: id.ironOre, id: id._id, army: id.army },
 	]);
 	
 	res.send(townsIds);

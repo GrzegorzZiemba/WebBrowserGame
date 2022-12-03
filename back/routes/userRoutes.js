@@ -7,19 +7,40 @@ import StoneMine from "../models/buildingsModels/stoneMineModel.js";
 import IronOreMine from "../models/buildingsModels/ironOreMineModel.js";
 import ArmyModel from "../models/armyModel.js";
 import BarrackModel from "../models/barrackModel.js";
+import PositionModel from "../models/positionModel.js";
 
 const router = express.Router();
 router.post("/createkingdom", async (req, res) => {
 	const user = req.body;
 
 	const val = await User.find({ email: user.email });
-	
+	const freePosition = await PositionModel.findById({_id: "638b882cc812fad2edcbc840"})
+	console.log(freePosition.position)
+	var flag = true
+	var availablePosition;
 	if (val.length == 0) {
 		const army = new ArmyModel();
 		await army.save();
-		
+		let numb = 0;
+		while(flag){
+			console.log(numb)
+			console.log(freePosition.position.includes(numb))
+			if(!freePosition.position.includes(numb)){
+				const positionArray = [...freePosition.position ];
+				console.log(positionArray)
+				positionArray.push(numb)
+				availablePosition = numb
+				await freePosition.update({
+					position: positionArray
+				})
+				flag = false
+			}
+			else{
+				numb++
+			}
+		}
 		const sawmill = new Sawmill();
-		
+	
 		await sawmill.save();
 		const stoneMine = new StoneMine();
 		await stoneMine.save();
@@ -34,6 +55,7 @@ router.post("/createkingdom", async (req, res) => {
 			stoneMine: stoneMine._id,
 			barrack: barrack._id,
 			army: army._id,
+			position: availablePosition
 		});
 		
 		await town.save();

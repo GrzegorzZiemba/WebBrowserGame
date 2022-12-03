@@ -6,6 +6,7 @@ export const archer = {
 	costStone: 300,
 	costIronOre: 195,
 	timeBuild: 40,
+	capacity: 6,
 };
 
 export const knight = {
@@ -16,14 +17,18 @@ export const knight = {
 	costStone: 250,
 	costIronOre: 200,
 	timeBuild: 30,
+	capacity: 12,
+
 };
 
 export const horseRider = {
 	strength: 18,
 	health: 90,
 	defence: 6,
-	costWood: 600,
-	costStone: 200,
-	costIronOre: 400,
+	costWood: 700,
+	costStone: 250,
+	costIronOre: 600,
 	timeBuild: 80,
+	capacity: 16,
+
 };
