@@ -7,7 +7,6 @@ import StoneMine from "../models/buildingsModels/stoneMineModel.js";
 import IronOreMine from "../models/buildingsModels/ironOreMineModel.js";
 import checkQueue from "../middleware/checkQueue.js";
 import build from "../middleware/build.js";
-import PositionModel from "../models/positionModel.js";
 const router = express.Router();
 
 router.post("/town", auth, async (req, res) => {
@@ -18,8 +17,7 @@ router.post("/town", auth, async (req, res) => {
 			const sawmill = await Sawmill.findById({ _id: town.sawmill });
 			const stoneMine = await StoneMine.findById({ _id: town.stoneMine });
 			const ironOreMine = await IronOreMine.findById({ _id: town.ironOreMine });
-			const freePosition = await PositionModel.findById({_id: "638b882cc812fad2edcbc840"})
-			console.log(freePosition.position)
+			
 			res.status(201).send({
 				exp: town.experience,
 				ironOre: town.ironOre,

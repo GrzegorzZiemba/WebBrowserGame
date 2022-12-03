@@ -14,8 +14,8 @@ router.post("/createkingdom", async (req, res) => {
 	const user = req.body;
 
 	const val = await User.find({ email: user.email });
-	const freePosition = await PositionModel.findById({_id: "638b882cc812fad2edcbc840"})
-	console.log(freePosition.position)
+	
+	const freePosition = await PositionModel.findById({_id: "638bae386c5e6d39b0327e58"})
 	var flag = true
 	var availablePosition;
 	if (val.length == 0) {
