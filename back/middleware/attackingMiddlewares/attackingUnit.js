@@ -1,72 +1,44 @@
 import { archer, knight, horseRider } from "../armyStats.js";
+import ArmyModel from "../../models/armyModel.js";
 
 export default async function attackingUnit(
 	defenderArmy,
 	attackingKnights,
 	attackingArchers,
-	attackingHorsemans
+	attackingHorsemans,
+	attackedId,
+	defenderId
 ) {
 	// if time passes /\
 
+	// assigning units to variables
 	var defendingKnights = defenderArmy.knigth;
 	var defendingArchers = defenderArmy.archer;
 	var defendingHorsemans = defenderArmy.horseRider;
+	var attackingKnights = attackingKnights;
+	var attackingArchers = attackingArchers;
+	var attackingHorsemans = attackingHorsemans;
 
 	// fight simulation
 
-	console.log(
-		" Knights " +
-			attackingKnights * knight.strength +
-			"  vs  " +
-			defendingKnights * knight.strength
-	);
-	console.log(
-		" Archers " +
-			attackingArchers * archer.strength +
-			"  vs  " +
-			defendingArchers * archer.strength
-	);
-	console.log(
-		" HorseRiders " +
-			attackingHorsemans * horseRider.strength +
-			"  vs  " +
-			defendingHorsemans * horseRider.strength
-	);
-
-	// strenght of attack
+	// strenght of attacking units
 	let strenghtOfAttackingUnits =
 		attackingKnights * knight.strength +
 		attackingArchers * archer.strength +
 		attackingHorsemans * horseRider.strength;
+	// strenght of defending units
 	let strenghtOfDefendingUnits =
 		defendingKnights * knight.strength +
 		defendingArchers * archer.strength +
 		defendingHorsemans * horseRider.strength;
 
-	console.log(strenghtOfAttackingUnits);
-	console.log(strenghtOfDefendingUnits);
+	// recalucalte that strengh to another variable to be able to check loses
+	let remainingStrengthOfAttackingUnits = strenghtOfAttackingUnits;
+	let remainingStrengthOfDefendingUnits = strenghtOfDefendingUnits;
 
-	// let healthAttackingUnits =
-	// 	attackingKnights * knight.health +
-	// 	attackingArchers * archer.health +
-	// 	attackingHorsemans * horseRider.health;
-	// let healthDefendingUnits =
-	// 	defendingKnights * knight.health +
-	// 	defendingArchers * archer.health +
-	// 	defendingHorsemans * horseRider.health;
-
-	// console.log("Health of units ");
-	// console.log(healthAttackingUnits);
-	// console.log(healthDefendingUnits);
-
+	// starting find simulation
 	for (let i = 1; i < 4; i++) {
-		// console.log(
-		// 	`Defender gets ${strenghtOfAttackingUnits} hp from attacking units and left ${
-		// 		healthDefendingUnits - strenghtOfAttackingUnits
-		// 	}/ ${healthDefendingUnits}`
-		// );
-		// defending Knights
-
+		// checking if units can find (if is there any units on attacking or defending army)
 		if (
 			(defendingKnights == 0 &&
 				defendingArchers == 0 &&
@@ -75,18 +47,14 @@ export default async function attackingUnit(
 				attackingKnights == 0 &&
 				attackingHorsemans == 0)
 		) {
-			console.log("FINISHED ");
 			return;
-		}
-
-		// DEFENDING lOSES
-		else {
+		} else {
+			// DEFENDING lOSES - how much units defending units lost
 			if (strenghtOfDefendingUnits > 0) {
-				console.log(strenghtOfDefendingUnits + "STRENGht OF DEFENDING UNITS");
 				if (defendingKnights > 0) {
 					let knightHealth = defendingKnights * knight.health;
 					let remainingDefendingKnightsHealth =
-						knightHealth - strenghtOfAttackingUnits;
+						knightHealth - remainingStrengthOfAttackingUnits;
 					let remainingDefendingKnights = Math.ceil(
 						remainingDefendingKnightsHealth / knight.health
 					);
@@ -95,35 +63,35 @@ export default async function attackingUnit(
 						remainingDefendingKnights < 0 ? 0 : remainingDefendingKnights;
 
 					if (defendingKnights == 0) {
-						strenghtOfAttackingUnits = strenghtOfAttackingUnits - knightHealth;
+						remainingStrengthOfAttackingUnits =
+							remainingStrengthOfAttackingUnits - knightHealth;
 					} else {
-						strenghtOfAttackingUnits = 0;
+						remainingStrengthOfAttackingUnits = 0;
 					}
 				}
 
-				if (defendingArchers > 0 && strenghtOfAttackingUnits > 0) {
+				if (defendingArchers > 0 && remainingStrengthOfAttackingUnits > 0) {
 					let knightHealth = defendingArchers * archer.health;
 					let remainingDefendingArchersHealth =
-						knightHealth - strenghtOfAttackingUnits;
+						knightHealth - remainingStrengthOfAttackingUnits;
 					let remainingDefendingArchers = Math.ceil(
 						remainingDefendingArchersHealth / archer.health
 					);
-					console.log(
-						remainingDefendingArchers + " REAMINING DEFENDING ARCHERS"
-					);
+
 					defendingArchers =
 						remainingDefendingArchers < 0 ? 0 : remainingDefendingArchers;
 
 					if (defendingArchers == 0) {
-						strenghtOfAttackingUnits = strenghtOfAttackingUnits - knightHealth;
+						remainingStrengthOfAttackingUnits =
+							remainingStrengthOfAttackingUnits - knightHealth;
 					} else {
-						strenghtOfAttackingUnits = 0;
+						remainingStrengthOfAttackingUnits = 0;
 					}
 				}
-				if (defendingHorsemans > 0 && strenghtOfAttackingUnits > 0) {
+				if (defendingHorsemans > 0 && remainingStrengthOfAttackingUnits >= 0) {
 					let knightHealth = defendingHorsemans * horseRider.health;
 					let remainingDefendingHordefendingHorsemansHealth =
-						knightHealth - strenghtOfAttackingUnits;
+						knightHealth - remainingStrengthOfAttackingUnits;
 					let remainingDefendingHordefendingHorsemans = Math.ceil(
 						remainingDefendingHordefendingHorsemansHealth / horseRider.health
 					);
@@ -137,49 +105,52 @@ export default async function attackingUnit(
 					}
 				}
 			}
-			console.log(strenghtOfAttackingUnits + " Strength of attacking units");
+			// end of DEFENDING LOSES
+
+			///////////
+
+			// ATTACKING lOSES - how much units ATTACKING units lost
+
 			if (strenghtOfAttackingUnits > 0) {
 				if (attackingKnights > 0) {
 					let knightHealth = attackingKnights * knight.health;
 					let remainingAttackingKnightsHealth =
-						knightHealth - strenghtOfDefendingUnits;
+						knightHealth - remainingStrengthOfDefendingUnits;
 					let remainingAttackingKnights = Math.ceil(
 						remainingAttackingKnightsHealth / knight.health
 					);
-					console.log(attackingKnights + " qty");
 
 					attackingKnights =
 						remainingAttackingKnights < 0 ? 0 : remainingAttackingKnights;
-					console.log(attackingKnights + " ATTACKIng KNIGHT");
+
 					if (attackingKnights == 0) {
-						strenghtOfDefendingUnits = strenghtOfDefendingUnits - knightHealth;
+						remainingStrengthOfDefendingUnits =
+							remainingStrengthOfDefendingUnits - knightHealth;
 					} else {
-						strenghtOfDefendingUnits = 0;
+						remainingStrengthOfDefendingUnits = 0;
 					}
 				}
-				if (attackingArchers > 0 && strenghtOfDefendingUnits > 0) {
+				if (attackingArchers > 0 && remainingStrengthOfDefendingUnits >= 0) {
 					let knightHealth = attackingArchers * archer.health;
 					let remainingAttackingArchersHealth =
-						knightHealth - strenghtOfDefendingUnits;
+						knightHealth - remainingStrengthOfDefendingUnits;
 					let remainingAttackingArchers = Math.ceil(
 						remainingAttackingArchersHealth / archer.health
-					);
-					console.log(
-						remainingAttackingArchers + " REAMINING DEFENDING ARCHERS"
 					);
 
 					attackingArchers =
 						remainingAttackingArchers < 0 ? 0 : remainingAttackingArchers;
 					if (attackingArchers == 0) {
-						strenghtOfDefendingUnits = strenghtOfDefendingUnits - knightHealth;
+						remainingStrengthOfDefendingUnits =
+							remainingStrengthOfDefendingUnits - knightHealth;
 					} else {
-						strenghtOfDefendingUnits = 0;
+						remainingStrengthOfDefendingUnits = 0;
 					}
 				}
-				if (attackingHorsemans > 0 && strenghtOfDefendingUnits > 0) {
+				if (attackingHorsemans > 0 && remainingStrengthOfDefendingUnits >= 0) {
 					let knightHealth = attackingHorsemans * horseRider.health;
 					let remainingAttackingHorsemansHealth =
-						knightHealth - strenghtOfDefendingUnits;
+						knightHealth - remainingStrengthOfDefendingUnits;
 					let remainingAttackingHorsemans = Math.ceil(
 						remainingAttackingHorsemansHealth / horseRider.health
 					);
@@ -187,23 +158,40 @@ export default async function attackingUnit(
 					attackingHorsemans =
 						remainingAttackingHorsemans < 0 ? 0 : remainingAttackingHorsemans;
 					if (attackingHorsemans == 0) {
-						strenghtOfDefendingUnits = strenghtOfDefendingUnits - knightHealth;
+						remainingStrengthOfDefendingUnits =
+							remainingStrengthOfDefendingUnits - knightHealth;
 					} else {
-						strenghtOfDefendingUnits = 0;
+						remainingStrengthOfDefendingUnits = 0;
 					}
 				}
 			}
-			console.log(defendingKnights);
-			console.log(defendingArchers);
-			console.log(defendingHorsemans);
-
-			console.log("====");
-			console.log(attackingKnights);
-			console.log(attackingArchers);
-			console.log(attackingHorsemans);
+			// END OF ATTACKING lOSES
 		}
+
+		// find armys - what armies and id they have
+		const defender = await ArmyModel.findById({ _id: defenderId });
+		const attacker = await ArmyModel.findById({ _id: attackedId });
+		//end find armys
+
+		////////////
+
+		// defender unit lost
+		await defender.update({
+			archer: defendingArchers,
+			knigth: defendingKnights,
+			horseRider: defendingHorsemans,
+		});
+
+		await defender.save();
+
+		// end of defender units lost\
+
+		////////////////
+
+		// attacker units lost
+
+		console.log(attacker.knigth + attackingKnights);
+
+		// end of attacker units lost
 	}
-	console.log(" +++++ Result ++++++");
-	console.log(strenghtOfAttackingUnits);
-	console.log(strenghtOfDefendingUnits);
 }
