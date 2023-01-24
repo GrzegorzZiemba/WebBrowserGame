@@ -6,3 +6,4 @@ export const LOGOUT = "LOGOUT";
 export const GET_TOWN = "GET_TOWN";
 export const UPGRADE_BUILDING = "UPGRADE_BUILDING";
 export const CREATE_UNITS = "CREATE_UNITS"
+export const GET_UNITS = "GET_UNITS"
