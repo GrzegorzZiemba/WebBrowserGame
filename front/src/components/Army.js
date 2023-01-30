@@ -1,11 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react'
 import * as Yup from "yup";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {createUnits} from '../store/actions/armyActions'
+import { useNavigate } from 'react-router';
+
+
 const Army = () => {
     const dispatch = useDispatch()
     const userToken = localStorage.getItem("userInfo");
+	let navigate = useNavigate();
+    const army = useSelector((state) => state.town.town);
+
+					
 
   return (
     <div>
@@ -39,7 +46,9 @@ const Army = () => {
                 dispatch(createUnits({archer:archerArmy, knight: knightArmy, horseRiders: horseRiderArmy, token: userToken}))
             }, 400);
             setTimeout(() => {
-                
+                 document.querySelector('#root').scrollIntoView({
+                    behavior: 'smooth'
+                }, 500)
             }, 500);
         }}
     >
@@ -78,9 +87,21 @@ const Army = () => {
     
     <h2>
         Your Army is 
+        <br />
+        Archer: {army.archer} 
+        <br />
+        Knights: {army.knigth} 
+        <br />
+        HorseRiders: {army.horseRider}
     </h2>
     <h3>
-        Army is building
+        Army is building: 
+        <br />
+        Archer: {army.trainingArchers} 
+        <br />
+        Knights: {army.trainingKnights} 
+        <br />
+        HorseRiders: {army.trainingHorsemans}
     </h3>
 </div>
 

@@ -15,9 +15,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cors());
+app.use(recruitingRoutes);
 app.use(userRoutes);
 app.use(townRoutes);
-app.use(recruitingRoutes);
 app.use(attackRoutes)
 const port = process.env.PORT || 4000;
 

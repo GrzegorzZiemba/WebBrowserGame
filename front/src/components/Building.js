@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col,  Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { upagradeTown } from "../store/actions/townActions";
-import DrewnoImage from "../images/Drewno.png"
+
 const Building = ({
 	wood,
 	stone,
@@ -16,6 +16,7 @@ const Building = ({
 	buildDate,
 	now,
 	buildingName,
+	buildingImage
 }) => {
 	const dispatch = useDispatch();
 	const userId = localStorage.getItem("userId");
@@ -30,7 +31,7 @@ const Building = ({
 		
 		  <Col>
 			<Card>
-			  <Card.Img variant="top" src={DrewnoImage} style={{width:"200px"}}/>
+			  <Card.Img variant="top" src={buildingImage} style={{width:"200px"}}/>
 			  <Card.Body>
 				<Card.Title>{buildingName}   <br />LEVEL:{buildingLevel} <br /> PRODUCTION: {buildingProduction}{" "}</Card.Title>
 				<Card.Text>

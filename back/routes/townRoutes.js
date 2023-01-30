@@ -5,8 +5,11 @@ import User from "../models/userModel.js";
 import Sawmill from "../models/buildingsModels/sawmillModel.js";
 import StoneMine from "../models/buildingsModels/stoneMineModel.js";
 import IronOreMine from "../models/buildingsModels/ironOreMineModel.js";
+import TrainingQueue from "../models/trainingQueue.js"
 import checkQueue from "../middleware/checkQueue.js";
 import build from "../middleware/build.js";
+import ArmyModel from "../models/armyModel.js";
+
 const router = express.Router();
 
 router.post("/town", auth, async (req, res) => {
@@ -17,7 +20,8 @@ router.post("/town", auth, async (req, res) => {
 			const sawmill = await Sawmill.findById({ _id: town.sawmill });
 			const stoneMine = await StoneMine.findById({ _id: town.stoneMine });
 			const ironOreMine = await IronOreMine.findById({ _id: town.ironOreMine });
-			
+			const army = await ArmyModel.findById({_id: town.army })
+			var isTrainingQueue = await TrainingQueue.find({townId: town._id});
 			res.status(201).send({
 				exp: town.experience,
 				ironOre: town.ironOre,
@@ -47,7 +51,14 @@ router.post("/town", auth, async (req, res) => {
 				ironOreMineWood: ironOreMine.wood,
 				ironOreMineStone: ironOreMine.stone,
 				ironOreMineIronOre: ironOreMine.ironOre,
-				position: "EHE"
+				position: "EHE",
+				archer: army.archer,
+				knigth: army.knigth,
+				horseRider: army.horseRider,
+				trainingHorsemans: isTrainingQueue[0]?.trainingHorsemanTime?.length,
+				trainingKnights: isTrainingQueue[0]?.trainingKnightTime?.length,
+				trainingArchers: isTrainingQueue[0]?.trainingArcherTime?.length	,
+				som: "23242"
 				
 			});
 		} catch (e) {
