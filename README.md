@@ -1,5 +1,6 @@
 # WebBrowserGame
 Web browser game - for myself / learning purposes and portfolio
+I created that using React / Redux / MongoDB / Node / Express 
 
 
 
