@@ -8,7 +8,7 @@ import Building from "./Building";
 
 const Buildings = () => {
 	const town = useSelector((state) => state.town.town);
-
+   console.log("Building")
   return (
    <>
       <Building
@@ -23,7 +23,7 @@ const Buildings = () => {
       buildingIsBuild={town.sawmillIsBuild}
       buildDate={new Date(town.sawmillFinishTime)}
       now={new Date()}
-      buildingName="Sawmill"
+      buildingName="sawmill"
       buildingImage={SawmillImage}
       />
       <Building
@@ -38,7 +38,7 @@ const Buildings = () => {
          buildingIsBuild={town.stoneMineIsBuild}
          buildDate={new Date(town.stoneMineFinishTime)}
          now={new Date()}
-         buildingName="stoneMfafwaine"
+         buildingName="stoneMine"
          buildingImage={stoneMine}
       />
       <Building

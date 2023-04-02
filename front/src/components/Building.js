@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Col,  Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { upagradeTown } from "../store/actions/townActions";
 
 const Building = ({
@@ -25,6 +26,7 @@ const Building = ({
 			? true
 			: false;
 	const userToken = localStorage.getItem("userInfo");
+	let navigate = useNavigate();
 	return (
 		<>
 		<Row xs={1} md={2} lg={1} className="g-4 mt-1 justify-content-center">
@@ -44,7 +46,10 @@ const Building = ({
 			isAvailable ? (
 				<Button
 					onClick={() => {
+						
 						dispatch(upagradeTown(userId, userToken, buildingName));
+						navigate('/kingdom')
+
 					}}
 				>
 					Build

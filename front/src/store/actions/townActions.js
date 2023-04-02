@@ -18,7 +18,6 @@ export const upagradeTown = (id, token, building) => async (dispatch) => {
 	try {
 		const { data } = await api.upagradeBuilding(id, token, building);
 		
-		
 		dispatch({ type: UPGRADE_BUILDING, payload: data });
 	} catch (e) {
 		

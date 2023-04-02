@@ -44,11 +44,16 @@ const Army = () => {
                 const horseRiderArmy = Math.floor(values.horseRidersQty) > 0 ? Math.floor(values.horseRidersQty) : 0
                 
                 dispatch(createUnits({archer:archerArmy, knight: knightArmy, horseRiders: horseRiderArmy, token: userToken}))
+
             }, 400);
+
             setTimeout(() => {
                  document.querySelector('#root').scrollIntoView({
                     behavior: 'smooth'
                 }, 500)
+
+                window.location.reload(false);
+
             }, 500);
         }}
     >

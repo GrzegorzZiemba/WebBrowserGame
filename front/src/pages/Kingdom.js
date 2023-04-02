@@ -17,16 +17,9 @@ const Kingdom = () => {
 
 	useEffect(() => {
 		dispatch(getTown(localStorage.getItem("userInfo")));
-		const interval = setInterval(
-			() => {
-				dispatch(getTown(localStorage.getItem("userInfo")));
-			},
+	
 
-			2000
-		);
-
-		return () => clearInterval(interval);
-	});
+	}, []);
 
 	return (
 		<>
