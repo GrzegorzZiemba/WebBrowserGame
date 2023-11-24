@@ -1,3 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://127.0.0.1:27017/game", {});
+mongoose.connect(
+  "mongodb+srv://testowyadmin:testowyadmin12345@gamefication.wganabz.mongodb.net/",
+  {}
+);

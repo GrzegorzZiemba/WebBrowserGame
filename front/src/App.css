@@ -1,11 +1,11 @@
 .main-button {
-    background-color: #BCAA99 !important;
-    border: #999 !important;
-  }
+  background-color: #bcaa99 !important;
+  border: #999 !important;
+}
 
 * {
-    color: #ddd !important
+  color: #ddd !important;
 }
-  .viewport-height {
-    min-height: 100vh;
+.viewport-height {
+  min-height: 100vh;
 }
