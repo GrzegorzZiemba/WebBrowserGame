@@ -1,13 +1,13 @@
 import express from "express";
 import User from "../models/userModel.js";
 import mongoose from "mongoose";
-import Town from "../models/townModel.js";
 import Sawmill from "../models/buildingsModels/sawmillModel.js";
 import StoneMine from "../models/buildingsModels/stoneMineModel.js";
 import IronOreMine from "../models/buildingsModels/ironOreMineModel.js";
 import ArmyModel from "../models/armyModel.js";
 import BarrackModel from "../models/barrackModel.js";
 import PositionModel from "../models/positionModel.js";
+import Resources from "../models/resourcesModel.js";
 
 const router = express.Router();
 router.post("/createkingdom", async (req, res) => {
@@ -50,20 +50,20 @@ router.post("/createkingdom", async (req, res) => {
     await ironOreMine.save();
     const barrack = new BarrackModel();
     await barrack.save();
+    const resources = new Resources();
+    await resources.save();
 
-    const town = new Town({
+    await town.save();
+    const userThat = new User({
+      ...user,
+      town: town._id,
       ironOreMine: ironOreMine._id,
       sawmill: sawmill._id,
       stoneMine: stoneMine._id,
       barrack: barrack._id,
       army: army._id,
       position: availablePosition,
-    });
-
-    await town.save();
-    const userThat = new User({
-      ...user,
-      town: town._id,
+      resources: resources._id,
     });
     await userThat.save();
     const token = await userThat.generateAuthToken();

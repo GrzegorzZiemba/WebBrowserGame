@@ -6,79 +6,67 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const userSchema = new mongoose.Schema({
-	userName: {
-		type: String,
-		requried: true,
-		trim: true,
-	},
-	email: {
-		type: String,
-		unique: true,
-		requried: true,
-		trim: true,
-		lowercase: true,
-		validate(value) {
-			if (!validator.isEmail(value)) {
-				throw new Error("Please provide valid email");
-			}
-		},
-	},
-	password: {
-		type: String,
-		required: true,
-		minlength: 9,
-		trim: true,
-	},
-	town: { type: mongoose.Types.ObjectId, ref: "Town" },
+  userName: {
+    type: String,
+    requried: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    requried: true,
+    trim: true,
+    lowercase: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error("Please provide valid email");
+      }
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 9,
+    trim: true,
+  },
+  experience: { type: Number, default: 1 },
 
-	tokens: [
-		{
-			token: {
-				type: String,
-				required: true,
-			},
-		},
-	],
+  ironOreMine: { type: mongoose.Types.ObjectId, ref: "IronOreMine" },
+
+  sawmill: { type: mongoose.Types.ObjectId, ref: "Sawmill" },
+
+  stoneMine: { type: mongoose.Types.ObjectId, ref: "StoneMine" },
+
+  army: { type: mongoose.Types.ObjectId, ref: "ArmyModel" },
+  barrack: { type: mongoose.Types.ObjectId, ref: "BarrackModel" },
+
+  position: { type: Number },
+  resources: { type: mongoose.Types.ObjectId, ref: "Resources" },
+
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
+// Match user entered password to hashed password in database
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Encrypt password using bcrypt
 userSchema.pre("save", async function (next) {
-	const user = this;
-	
-	
-	if (user.isModified("password")) {
-		user.password = await bcrypt.hash(user.password, 8);
-	}
-	next();
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
-
-userSchema.methods.generateAuthToken = async function () {
-	const user = this;
-	
-	const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_JWT);
-
-	user.tokens = user.tokens.concat({ token });
-	await user.save();
-
-	return token;
-};
-
-userSchema.statics.loginUser = async (email, password) => {
-	const user = await User.findOne({ email });
-	
-	if (!user) {
-		throw new Error("Cannot login");
-	}
-
-	const checkPass = await bcrypt.compare(password, user.password);
-	
-	if (!checkPass) {
-		
-		
-		throw new Error("Cannot login");
-	}
-
-	return user;
-};
 
 const User = mongoose.model("User", userSchema);
 

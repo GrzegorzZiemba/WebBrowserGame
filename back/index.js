@@ -5,21 +5,20 @@ import cors from "cors";
 dotenv.config();
 import "./mongodb/mongodb.js";
 import userRoutes from "./routes/userRoutes.js";
-import townRoutes from "./routes/townRoutes.js";
-import recruitingRoutes from "./routes/recruitingRoutes.js";
-import attackRoutes from "./routes/attackRoutes.js"
+// import townRoutes from "./routes/townRoutes.js";
+// import recruitingRoutes from "./routes/recruitingRoutes.js";
+// import attackRoutes from "./routes/attackRoutes.js";
 
-import production from "./middleware/production.js"
+// import production from "./middleware/production.js";
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cors());
-app.use(recruitingRoutes);
+// app.use(recruitingRoutes);
 app.use(userRoutes);
-app.use(townRoutes);
-app.use(attackRoutes)
+// app.use(townRoutes);
+// app.use(attackRoutes)
 const port = process.env.PORT || 4000;
 
-
-app.listen(port,()=>{})
+app.listen(port, () => {});
