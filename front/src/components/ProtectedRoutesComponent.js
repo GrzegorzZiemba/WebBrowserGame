@@ -5,12 +5,10 @@ import { getTown } from "../store/actions/townActions";
 const ProtectedRoutesComponent = () => {
   let userAuth = false;
 
-  let tokenInfo = localStorage.getItem("userToken");
-  const dispatch = useDispatch();
-  const town = dispatch(getTown(tokenInfo));
-  const see = useSelector((state) => state);
+  const see = localStorage.getItem("userInfo");
   console.log(see);
-  if (town) {
+  if (see) {
+    console.log(see);
     userAuth = true;
   }
   return userAuth ? (

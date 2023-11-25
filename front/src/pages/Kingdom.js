@@ -11,9 +11,7 @@ import Buildings from "../components/Buildings";
 const Kingdom = () => {
   const town = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  const userId = localStorage.getItem("userId");
-
-  console.log(town);
+  const userId = localStorage.getItem("userInfo");
 
   useEffect(() => {
     dispatch(getTown(localStorage.getItem("userInfo")));
@@ -21,7 +19,7 @@ const Kingdom = () => {
 
   return (
     <>
-      {userId && town !== "" ? (
+      {userId !== "" ? (
         <>
           <KingdomNavbar />
           <Container>
