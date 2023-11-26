@@ -1,30 +1,24 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
-import * as dotenv from "dotenv";
-dotenv.config();
+
 const auth = async (req, res, next) => {
-  console.log("auth");
-  try {
-    const token = req.header("Authorization").replace("Bearer", "");
+  let token;
 
-    const tokenToVerify = JSON.parse(token);
+  // Read JWT from the 'jwt' cookie
+  token = req.cookies.jwt;
 
-    const decoded = jwt.verify(tokenToVerify, process.env.SECRET_JWT);
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET_JWT);
 
-    const user = await User.findOne({
-      _id: decoded._id,
-      token: token,
-    });
+      req.user = await User.findById(decoded.userId);
 
-    if (!user) {
-      throw new Error();
+      next();
+    } catch (error) {
+      res.status(401).send({ msg: "Wrong Token" });
     }
-
-    req.token = token;
-    req.user = user;
-    next();
-  } catch (e) {
-    res.send({ error: "PLease Authentiace" });
+  } else {
+    res.status(401).send({ msg: "No token!" });
   }
 };
 

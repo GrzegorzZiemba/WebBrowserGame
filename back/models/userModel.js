@@ -6,7 +6,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const userSchema = new mongoose.Schema({
-  userName: {
+  username: {
     type: String,
     requried: true,
     trim: true,
@@ -43,30 +43,43 @@ const userSchema = new mongoose.Schema({
   position: { type: Number },
   resources: { type: mongoose.Types.ObjectId, ref: "Resources" },
 
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  tokens: {
+    type: String,
+  },
 });
 
 // Match user entered password to hashed password in database
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.generateAuthToken = async function () {
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_JWT);
+  user.tokens = token;
+  await user.save();
+
+  //   res.cookie('jwt', token, {
+  // 	httpOnly: true,
+  // 	secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
+  // 	sameSite: 'strict', // Prevent CSRF attacks
+  // 	maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  //   });
+
+  return token;
 };
 
-// Encrypt password using bcrypt
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
+userSchema.statics.loginUser = async (email, password) => {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new Error("Cannot login");
   }
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+  const checkPass = await bcrypt.compare(password, user.password);
+
+  if (!checkPass) {
+    throw new Error("Cannot login");
+  }
+
+  return user;
+};
 
 const User = mongoose.model("User", userSchema);
 
